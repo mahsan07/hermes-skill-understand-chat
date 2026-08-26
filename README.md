@@ -1,115 +1,73 @@
-<p align="center">
-  <img src="assets/system-map.svg" alt="Detailed system map for Understand Chat" width="100%">
-</p>
-
 # Understand Chat
 
 > Ask targeted questions about a codebase using its knowledge graph rather than guessing from filenames.
 
-This repository packages a single, reusable Hermes skill as a documentation-first public reference. It explains the problem, operating contract, safety boundaries, expected evidence, and example usage without claiming a bundled runtime that is not present.
+This repository packages one focused Hermes skill as a public, documentation-first capability. The blueprint below explains the actual operating surfaces, control points, failure paths, and evidence expected from a trustworthy run.
 
-## Why this exists
+![Detailed systems blueprint for Understand Chat](assets/system-blueprint.png)
 
-Technical work becomes difficult to review when discovery, decisions, changes, and verification are mixed together. **Understand Chat** turns that work into an explicit sequence with visible inputs, outputs, review points, and completion evidence.
+## The problem it solves
 
-## Why the repository has this name
+Technical work becomes difficult to review when discovery, decisions, changes, and verification are mixed together.
 
-The shared `hermes-skill-` prefix identifies this as a portable Hermes workflow package. `understand-chat` names the capability directly—understand chat—so the repository remains searchable and understandable outside the original AI-OS workspace. The public title is **Understand Chat**.
+## System components
 
-## At a glance
+- **Developer question**
+- **Existing code knowledge graph**
+- **Entity and path search**
+- **Evidence bundle**
+- **Grounded answer**
 
-| Question | Answer |
-| --- | --- |
-| What is it? | Engineering workflow packaged as a reusable Hermes `SKILL.md`. |
-| What does it do? | Ask targeted questions about a codebase using its knowledge graph rather than guessing from filenames. |
-| Who is it for? | Builders, operators, and reviewers who want a repeatable, inspectable workflow. |
-| What is delivered? | A skill contract, examples, safety guidance, release checks, and rendered SVG diagrams. |
-| Runtime status | Documentation-first reference package; connect it to the tools available in your own environment. |
+## Execution walkthrough
 
-## Visual system map
-
-The diagram below is specific to this capability. It shows the real components and artifacts involved rather than a generic agent loop.
-
-![Understand Chat system map](assets/system-map.svg)
-
-## Operation sequence
-
-![Understand Chat actor and data sequence](assets/operation-sequence.svg)
-
-1. Translate the question into graph entities
-2. Locate relevant components and symbols
-3. Traverse calls imports and data paths
-4. Open the minimum supporting source excerpts
-5. Compose an answer from graph evidence
-6. Cite files symbols and uncertainty
-
-See [How it works](docs/HOW-IT-WORKS.md) for the component-by-component walkthrough and evidence model.
-
-## Example visual output
-
-![Illustrative output produced by Understand Chat](assets/example-output.svg)
-
-This is an explanatory mockup of the output shape—not fabricated proof that a live run occurred. The labels show the information a real result should expose for review.
-
-## Decision and stop conditions
-
-![Decision guide for Understand Chat](assets/decision-guide.svg)
-
-## Inputs
-
-- A bounded repository, diff, runtime, or engineering question
-- Constraints such as allowed files, tools, and change scope
-- Existing tests, logs, or acceptance criteria
-
-## Outputs
-
-- An evidence-backed finding, plan, review, or implementation
-- Verification results and remaining risks
-- A concise handoff another engineer can reproduce
+1. **Translate the question into graph entities**
+2. **Locate relevant components and symbols**
+3. **Traverse calls imports and data paths**
+4. **Open the minimum supporting source excerpts**
+5. **Compose an answer from graph evidence**
+6. **Cite files symbols and uncertainty**
 
 ## Example request
 
 > Use a disposable sample repository to ask targeted questions about a codebase using its knowledge graph rather than guessing from filenames. Return the result, the evidence used to verify it, and any limitations or actions that still require approval.
 
-More scenarios and expected results are in [Examples](docs/EXAMPLES.md).
+## Evidence contract
 
-## Safety and trust model
+- `request.json` — captures request.
+- `inspection.json` — captures inspection.
+- `preview.json` — captures preview.
+- `execution.json` — captures execution.
+- `verification.json` — captures verification.
+- `receipt.json` — captures receipt.
 
-This workflow is designed around inspection and evidence; uncertainty must remain visible. It must stop when ownership, authorization, target state, or publication safety is ambiguous. Never place credentials, private endpoints, personal data, or environment-specific secrets in the skill package or its evidence.
+A run is complete only when the final artifact can be reopened or re-read and compared with the requested acceptance criteria. An attempted command or successful API response alone is not sufficient proof.
 
-Read [SAFETY.md](SAFETY.md) and [SECURITY.md](SECURITY.md) before connecting the workflow to real accounts, devices, repositories, or production data.
+## Safety boundaries
 
-## What this repository does not claim
+- Confirm the exact target, owner, environment, and authority before acting.
+- Preview consequential changes and pause at the approval gate.
+- Keep credentials, personal data, and private endpoints out of logs and examples.
+- Preserve user work and avoid unrelated changes.
+- Report verification failures as incomplete work.
 
-- It does not replace project-specific tests, code review, or production approval.
-- It is not a hosted service, executable application, or vendor endorsement.
-- It does not include credentials, private infrastructure, or the original personal AI-OS configuration.
-- A successful example does not prove production readiness for every environment.
+Read [SAFETY.md](SAFETY.md), [SECURITY.md](SECURITY.md), and the detailed [How it works](docs/HOW-IT-WORKS.md) guide before connecting this workflow to a real service or production environment.
 
-## Repository map
+## Repository contents
 
 | Path | Purpose |
 | --- | --- |
-| `SKILL.md` | Concise trigger conditions and operating workflow used by an agent. |
-| `docs/PRODUCT.md` | Problem framing, audience, boundaries, and readiness model. |
-| `docs/HOW-IT-WORKS.md` | Expanded walkthrough with diagrams and verification points. |
-| `docs/EXAMPLES.md` | Realistic safe, review-only, and stop-condition scenarios. |
-| `docs/RELEASE.md` | Checks to complete before publishing a revision. |
-| `assets/system-map.svg` | Capability-specific block, graph, stack, loop, or canvas architecture. |
-| `assets/operation-sequence.svg` | Actor and data sequence using the skill’s real stages. |
-| `assets/example-output.svg` | Illustrated mockup of the artifact or interface a run should produce. |
-| `assets/decision-guide.svg` | Capability-specific decisions, approval boundaries, and stop states. |
-| `tests/README.md` | Manual contract and package validation guidance. |
+| `SKILL.md` | Trigger conditions and concise agent workflow. |
+| `assets/system-blueprint.png` | High-resolution technical architecture poster. |
+| `docs/HOW-IT-WORKS.md` | Component and execution-stage details. |
+| `docs/EXAMPLES.md` | Safe, review-only, and failure scenarios. |
+| `docs/PRODUCT.md` | Audience, problem statement, and maturity. |
 | `SAFETY.md` / `SECURITY.md` | Operational and disclosure boundaries. |
+| `tests/README.md` | Contract and package validation guidance. |
 
-## Use this package
+## Maturity
 
-1. Read `SKILL.md` and confirm its trigger matches your task.
-2. Copy the package into the skill location supported by your agent environment, or use it as a reference when authoring an equivalent workflow.
-3. Replace tool assumptions with the tools actually available to you; do not add secrets to the repository.
-4. Run the smallest safe example from `docs/EXAMPLES.md`.
-5. Record verification evidence and review any consequential action before widening scope.
+This is a public reference workflow extracted from a larger private workbench. It does not include a hosted runtime, credentials, or private infrastructure. Adopters must connect compatible tools and validate behavior in their own environment.
 
 ## Contributing
 
-Improvements are welcome when they preserve narrow scope, honest capability claims, safe defaults, and reproducible verification. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Contributions should improve capability accuracy, safe defaults, reproducible examples, or verification evidence without broadening the skill beyond its stated purpose. See [CONTRIBUTING.md](CONTRIBUTING.md).

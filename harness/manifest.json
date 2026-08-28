@@ -1,0 +1,85 @@
+{
+  "protocol_version": "0.1",
+  "skill": {
+    "id": "hermes-skill-understand-chat",
+    "display_name": "Understand Chat",
+    "description": "Ask targeted questions about a codebase using its knowledge graph rather than guessing from filenames."
+  },
+  "task_profile": {
+    "category": "engineering",
+    "architecture": "graph",
+    "artifact": "graph",
+    "inputs": [
+      "Developer question",
+      "Existing code knowledge graph"
+    ],
+    "outputs": [
+      "Grounded answer",
+      "Question",
+      "Entity match",
+      "Path length 4",
+      "Answer evidence"
+    ]
+  },
+  "modules": {
+    "memory": {
+      "strategy": "entity_relationship_memory",
+      "responsibility": "Retain developer question plus decisions, observations, and verification evidence needed to resume safely."
+    },
+    "planning": {
+      "strategy": "dependency_and_path_traversal",
+      "responsibility": "Transform existing code knowledge graph into the ordered, bounded stages defined by this skill."
+    },
+    "action": {
+      "strategy": "inspect_change_test_handoff",
+      "responsibility": "Advance the workflow through entity and path search while preserving stop conditions and user authority."
+    },
+    "capability": {
+      "strategy": "task_conditioned_minimum_capability_set",
+      "responsibility": "Expose only repository, runtime, and verification capabilities required by the bounded engineering task."
+    }
+  },
+  "execution": {
+    "stages": [
+      "Translate the question into graph entities",
+      "Locate relevant components and symbols",
+      "Traverse calls imports and data paths",
+      "Open the minimum supporting source excerpts",
+      "Compose an answer from graph evidence",
+      "Cite files symbols and uncertainty"
+    ],
+    "gates": [
+      "scope_and_authority_confirmed",
+      "capability_and_dependency_preflight",
+      "consequential_action_previewed_when_applicable",
+      "output_reopened_and_verified"
+    ]
+  },
+  "verification": {
+    "evidence": [
+      "Question",
+      "Entity match",
+      "Path length 4",
+      "Answer evidence"
+    ],
+    "metrics": [
+      "task_success",
+      "verification_pass_rate",
+      "tool_error_rate",
+      "repair_count",
+      "latency_ms",
+      "estimated_cost_usd"
+    ]
+  },
+  "failure_policy": {
+    "max_repairs": 2,
+    "schema_error": "repair_then_stop",
+    "permission_error": "stop_without_retry",
+    "verification_failure": "report_incomplete"
+  },
+  "maturity": {
+    "level": "executable_contract",
+    "runtime_scope": "validation_and_dry_run_planning",
+    "claim_boundary": "This repository validates and plans the harness contract; it does not claim live service execution or benchmark gains without a connected adapter and measured evidence."
+  }
+}
